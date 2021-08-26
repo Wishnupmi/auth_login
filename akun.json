@@ -1,0 +1,14 @@
+[
+    {
+        "pesan": "Berhasil masuk",
+        "id": 1,
+        "username": "wishnupmi@gmail.com",
+        "password": "123"
+    },
+    {
+        "pesan": "Berhasil masuk",
+        "id": 2,
+        "username": "wishnuharnadhi1@gmail.com",
+        "password": "111"
+    }
+]

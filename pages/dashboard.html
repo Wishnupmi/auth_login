@@ -1,0 +1,160 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+        </div>
+        <div class="title">Dashboard</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong">
+        <p>Button Logout.</p>
+        
+        <p><a href="#" class="button button-fill color-green" @click="showNotificationFull">Logout With Preloader</a></p>
+        <p><a href="#" class="button button-fill color-blue" @click="showDeterminate(false)">Logout With Progressbar</a></p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  return {
+    methods: {
+      showNotificationFull: function () {
+          // app.dialog.alert("Keluar");
+          // app.dialog.progress();
+          app.dialog.preloader('Tunggu sebentar...');
+          setTimeout(function () {
+            app.dialog.close();
+            app.views.main.router.navigate('/beranda/');
+            localStorage.removeItem("status");
+            localstorage.clear();
+          }, 1000);    
+      },
+      showNotificationWithButton: function () {
+        var self = this;
+        // Create notification
+        if (!self.notificationWithButton) {
+          self.notificationWithButton = self.$app.notification.create({
+            icon: '<i class="icon icon-f7"></i>',
+            title: 'Framework7',
+            subtitle: 'Notification with close button',
+            text: 'Click (x) button to close me',
+            closeButton: true,
+          });
+        }
+        // Open it
+        self.notificationWithButton.open();
+      },
+      showNotificationCloseOnClick: function () {
+        var self = this;
+        // Create notification
+        if (!self.notificationCloseOnClick) {
+          self.notificationCloseOnClick = self.$app.notification.create({
+            icon: '<i class="icon icon-f7"></i>',
+            title: 'Framework7',
+            titleRightText: 'now',
+            subtitle: 'Notification with close on click',
+            text: 'Click me to close',
+            closeOnClick: true,
+          });
+        }
+        // Open it
+        self.notificationCloseOnClick.open();
+      },
+      showNotificationCallbackOnClose: function () {
+        var self = this;
+        // Create notification
+        if (!self.notificationCallbackOnClose) {
+          self.notificationCallbackOnClose = self.$app.notification.create({
+            icon: '<i class="icon icon-f7"></i>',
+            title: 'Framework7',
+            titleRightText: 'now',
+            subtitle: 'Notification with close on click',
+            text: 'Click me to close',
+            closeOnClick: true,
+            on: {
+              close: function () {
+                self.$app.dialog.alert('Notification closed');
+              },
+            },
+          });
+        }
+        // Open it
+        self.notificationCallbackOnClose.open();
+      },
+
+      // progressbar
+      setInlineProgress: function (value) {
+        var self = this;
+        var app = self.$app;
+        app.progressbar.set('#demo-inline-progressbar', value);
+      },
+      showDeterminate: function (inline) {
+        var self = this;
+        var app = self.$app;
+        if (self.determinateLoading) return;
+        self.determinateLoading = true;
+        var progressBarEl;
+        if (inline) {
+          progressBarEl = app.progressbar.show('#demo-determinate-container', 0);
+        } else {
+          progressBarEl = app.progressbar.show(0);
+        }
+        var progress = 0;
+        function simulateLoading() {
+          setTimeout(function () {
+            var progressBefore = progress;
+            progress += Math.random() * 20;
+            app.progressbar.set(progressBarEl, progress);
+            if (progressBefore < 100) {
+              simulateLoading(); //keep "loading"
+            }
+            else {
+              self.determinateLoading = false;
+              app.progressbar.hide(progressBarEl); //hide
+
+              app.views.main.router.navigate('/beranda/');
+              localStorage.removeItem("status");
+              localstorage.clear();
+
+            }
+          }, Math.random() * 200 + 200);
+        }
+        simulateLoading();
+      },
+      showInfinite: function (multiColor) {
+        var self = this;
+        var app = self.$app;
+        if (self.infiniteLoading) return;
+        self.infiniteLoading = true;
+        if (multiColor) {
+          app.progressbar.show('multi');
+        } else {
+          app.progressbar.show();
+        }
+        setTimeout(function () {
+          self.infiniteLoading = false;
+          app.progressbar.hide();
+        }, 3000);
+      },
+
+    },
+    on: {
+      pageBeforeOut: function () {
+        var self = this;
+        self.$app.notification.close();
+      },
+      pageBeforeRemove: function () {
+        var self = this;
+        // Destroy toasts when page removed
+        if (self.notificationFull) self.notificationFull.destroy();
+        if (self.notificationWithButton) self.notificationWithButton.destroy();
+        if (self.notificationCloseOnClick) self.notificationCloseOnClick.destroy();
+        if (self.notificationCallbackOnClose) self.notificationCallbackOnClose.destroy();
+      },
+    }
+  }
+</script>
