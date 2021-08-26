@@ -7,34 +7,6 @@ header("Access-Control-Max-Age: 604800");
 header("Access-Control-Request-Headers: x-requested-with");
 header("Access-Control-Allow-Headers: x-requested-with, x-requested-by");
 
-// $username = $_POST['username'];
-// $password = $_POST['password'];
-
-// $qry = mysqli_query($koneksi,"select * from mahasiswa WHERE Email='$username' and password='$password'") or die (mysqli_error());
-// $data = mysqli_fetch_array($qry);
-// $banyak = mysqli_num_rows($qry);
-
-// if($banyak>=1) {
-//     $output['pesan'] = "Berhasil masuk";
-//     $output['id']=$data['id'];
-//     $output['username']=$data['Email'];
-// } else {
-//     $output['error'] = true;
-//     $output['pesan'] = "Gagal masuk";
-// }
-// echo json_encode($output);
-
-
-
-// $username = "wishnupmi@gmail.com";
-// $password = "123";
-
-
-
-
-
-
-
 // Kode Utama jangan di hapus
 // $username = $_POST['username'];
 // $password = $_POST['password'];
@@ -59,7 +31,8 @@ header("Access-Control-Allow-Headers: x-requested-with, x-requested-by");
 // }
 // echo json_encode($output);
 
-
+// $username = "wishnupmi@gmail.com";
+// $password = "123";
 
 
 $username = $_POST['username'];
